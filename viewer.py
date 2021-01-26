@@ -5,7 +5,7 @@ import streamlit as st
 from streamlit_drawable_canvas import st_canvas
 import numpy as np
 
-scale = 70
+scale = 20
 
 # Downloads the model artifact from wandb
 @st.cache
@@ -42,23 +42,23 @@ def main():
     artifact_name = query_params.get("artifact_name",[None])[0]
     model_name = query_params.get("model_name",[None])[0]
     if entity is None or project is None or run_id is None or artifact_name is None or model_name is None:
-        st.write("Invalid URL Params")
-
-    # Get the model
-    model = get_model(entity, project, run_id, artifact_name, model_name)
-    if model:
-        # When the user draws a figure, transform the data into something the model
-        # can intake and perform a prediction
-        def handle_data(data):
-            _data = np.zeros((8,8))
-            data = np.array(data)[:,:,0]
-            for i in range(8):
-                for j in range(8):
-                    _data[i,j] = (data[i*70:(i+1)*scale,j*scale:(j+1)*scale].mean() / 16)
-            _data = _data.astype(int)
-            st.header("Prediction: " + str(model.predict(_data.reshape(1, -1))[0]))
-        make_canvas(handle_data)
+        st.write("Invalid URL Params, got: " + str(query_params))
     else:
-        st.write("Model not found")
+        # Get the model
+        model = get_model(entity, project, run_id, artifact_name, model_name)
+        if model:
+            # When the user draws a figure, transform the data into something the model
+            # can intake and perform a prediction
+            def handle_data(data):
+                _data = np.zeros((8,8))
+                data = np.array(data)[:,:,0]
+                for i in range(8):
+                    for j in range(8):
+                        _data[i,j] = (data[i*scale:(i+1)*scale,j*scale:(j+1)*scale].mean() / 16)
+                _data = _data.astype(int)
+                st.header("Prediction: " + str(model.predict(_data.reshape(1, -1))[0]))
+            make_canvas(handle_data)
+        else:
+            st.write("Model not found")
 
 main()
