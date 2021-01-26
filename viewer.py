@@ -5,7 +5,7 @@ import streamlit as st
 from streamlit_drawable_canvas import st_canvas
 import numpy as np
 
-scale = 20
+scale = 50
 
 # Downloads the model artifact from wandb
 @st.cache
