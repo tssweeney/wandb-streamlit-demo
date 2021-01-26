@@ -15,10 +15,10 @@ TODO: Setup a public streamlit app as a demo
 
 Navigate to the run page and you should be able to draw numbers which are passed to the trained model for that Run.
 
-![Streamlit on Run page](./assets/streamlit_demo_1)
+![Streamlit on Run page](./assets/streamlit_demo_1.png)
 
 ## Create a Report:
 
 You can also embed these apps in a report to directly compare models!
  
-![Streamlit on Report page](./assets/streamlit_demo_2)
+![Streamlit on Report page](./assets/streamlit_demo_2.png)
